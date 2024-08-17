@@ -5,8 +5,6 @@ import (
 	"lion-super-app/configs"
 	"lion-super-app/internal/abstraction"
 	res "lion-super-app/pkg/util/response"
-	"strings"
-
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 )
@@ -20,8 +18,7 @@ func Authentication(next echo.HandlerFunc) echo.HandlerFunc {
 			return res.ErrorBuilder(&res.ErrorConstant.Unauthorized, nil).Send(c)
 		}
 
-		splitToken := strings.Split(authToken, "Bearer ")
-		token, err := jwt.Parse(splitToken[1], func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.Parse(authToken, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method :%v", token.Header["alg"])
 			}

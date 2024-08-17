@@ -10,7 +10,7 @@ import (
 type CategoryEntity struct {
 	Name        string    `gorm:"type:varchar(100);not null" json:"name"`
 	Description string    `gorm:"type:text" json:"description"`
-	Products    []ProductEntityModel `gorm:"foreignKey:CategoryID" json:"products,omitempty"`
+	// Products    []ProductEntityModel `gorm:"foreignKey:CategoryID" json:"products,omitempty"`
 }
 
 type CategoryFilter struct {
@@ -25,7 +25,7 @@ type CategoryEntityModel struct {
 	CategoryEntity
 
 	// relations
-	Product []ProductEntityModel `json:"category_id" gorm:"foreignKey:CategoryID"`
+	// Product []ProductEntityModel `json:"category_id" gorm:"foreignKey:CategoryID"`
 	
 	Context *abstraction.Context `json:"-" gorm:"-"`
 }

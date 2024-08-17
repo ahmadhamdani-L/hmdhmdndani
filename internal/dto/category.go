@@ -39,7 +39,6 @@ type CategoryGetByIDResponseDoc struct {
 // Create
 type CategoryCreateRequest struct {
 	model.CategoryEntity
-	Product []model.ProductEntity
 }
 type CategoryCreateResponse struct {
 	model.CategoryEntityModel

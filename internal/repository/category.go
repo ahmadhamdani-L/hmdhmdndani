@@ -36,16 +36,11 @@ func (r *category) Find(ctx *abstraction.Context, m *model.CategoryFilterModel, 
 	var info abstraction.PaginationInfo
 
 	query := conn.Model(&model.CategoryEntityModel{})
-	//filter
-	tableName := model.CategoryEntityModel{}.TableName()
-	query = r.FilterTable(ctx, query, *m, tableName)
 
-	//filter custom
-	query = r.FilterMultiVersion(ctx, query, m.CategoryFilter)
-	queryUser := conn.Model(&model.UserEntityModel{}).Select("id")
-	query = r.FilterUser(ctx, query, queryUser, m.Filter, tableName)
+	// Filter
+	query = r.Filter(ctx, query, *m)
 
-	//sort
+	// Sorting
 	if p.Sort == nil {
 		sort := "desc"
 		p.Sort = &sort
@@ -54,15 +49,10 @@ func (r *category) Find(ctx *abstraction.Context, m *model.CategoryFilterModel, 
 		sortBy := "created_at"
 		p.SortBy = &sortBy
 	}
-	tmpSortBy := p.SortBy
-	if p.SortBy != nil {
-		sortBy := fmt.Sprintf("category.%s", *p.SortBy)
-		p.SortBy = &sortBy
-	}
-	sort := fmt.Sprintf("%s %s", *p.SortBy, *p.Sort)
-	query = query.Order(sort)
-	p.SortBy = tmpSortBy
-	//pagination
+	sortBy := fmt.Sprintf("%s %s", *p.SortBy, *p.Sort)
+	query = query.Order(sortBy)
+
+	// Pagination
 	if p.Page == nil {
 		page := 1
 		p.Page = &page
@@ -71,36 +61,42 @@ func (r *category) Find(ctx *abstraction.Context, m *model.CategoryFilterModel, 
 		pageSize := 10
 		p.PageSize = &pageSize
 	}
-	info = abstraction.PaginationInfo{
-		Pagination: p,
-	}
 	limit := *p.PageSize
 	offset := limit * (*p.Page - 1)
-	var totalData int64
-	query = query.Count(&totalData).Limit(limit).Offset(offset)
 
-	if err := query.Joins("Company").Joins("UserCreated", func(db *gorm.DB) *gorm.DB {
-		db = db.Select("id, name")
-		return db
-	}).Preload("UserModified").Preload("TrialBalance").Find(&datas).WithContext(ctx.Request().Context()).Error; err != nil {
-		return &datas, &info, err
+	var totalData int64
+	countQuery := conn.Model(&model.CategoryEntityModel{})
+	countQuery = r.Filter(ctx, countQuery, *m)
+	err := countQuery.Count(&totalData).Error
+	if err != nil {
+		return nil, nil, err
 	}
 
-	info.Count = int(totalData)
-	info.MoreRecords = false
-	if int(totalData) > *p.PageSize {
-		info.MoreRecords = true
-		
+	// Fetch data with pagination
+	dataQuery := conn.Model(&model.CategoryEntityModel{})
+	dataQuery = r.Filter(ctx, dataQuery, *m)
+	dataQuery = dataQuery.Order(sortBy).Limit(limit).Offset(offset)
+	err = dataQuery.Find(&datas).Error
+	if err != nil {
+		return nil, nil, err
+	}
+
+	info = abstraction.PaginationInfo{
+		Pagination: p,
+		Count:      int(totalData),
+		MoreRecords: totalData > int64(offset+limit),
 	}
 
 	return &datas, &info, nil
 }
 
+
 func (r *category) FindByID(ctx *abstraction.Context, id *int) (*model.CategoryEntityModel, error) {
 	conn := r.CheckTrx(ctx)
 
 	var data model.CategoryEntityModel
-	if err := conn.Where("id = ?", &id).Preload("Product").First(&data).WithContext(ctx.Request().Context()).Error; err != nil {
+	if err := conn.Where("id = ?", &id).First(&data).WithContext(ctx.Request().Context()).Error; err != nil {
+	// if err := conn.Where("id = ?", &id).Preload("Product").First(&data).WithContext(ctx.Request().Context()).Error; err != nil {
 		return &data, err
 	}
 	return &data, nil
