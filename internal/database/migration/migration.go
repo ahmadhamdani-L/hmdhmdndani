@@ -26,6 +26,7 @@ func Init() {
 			DbModels: &[]interface{}{
 				&model.UserEntityModel{},
 				&model.CategoryEntityModel{},
+				&model.ProductEntityModel{},
 			},
 			IsAutoMigrate: true,
 		},

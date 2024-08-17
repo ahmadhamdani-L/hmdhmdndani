@@ -11,6 +11,7 @@ type Factory struct {
 	Db                                         *gorm.DB
 	UserRepository                             repository.User
 	CategoryRepository 						   repository.Category
+	ProductRepository 						   repository.Product
 }
 
 func NewFactory() *Factory {
@@ -36,4 +37,5 @@ func (f *Factory) SetupRepository() {
 
 	f.UserRepository = repository.NewUser(f.Db)
 	f.CategoryRepository = repository.NewCategory(f.Db)
+	f.ProductRepository = repository.NewProduct(f.Db)
 }

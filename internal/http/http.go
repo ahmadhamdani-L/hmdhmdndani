@@ -5,6 +5,7 @@ import (
 	"lion-super-app/configs"
 	"lion-super-app/internal/app/auth"
 	"lion-super-app/internal/app/category"
+	"lion-super-app/internal/app/product"
 	"lion-super-app/internal/factory"
 	"net/http"
 
@@ -12,7 +13,7 @@ import (
 )
 
 func Init(e *echo.Echo, f *factory.Factory) {
-	// index
+
 	e.GET("/", func(c echo.Context) error {
 		message := fmt.Sprintf("Welcome to %s version %s", configs.App().Name(), configs.App().Version())
 		return c.String(http.StatusOK, message)
@@ -23,4 +24,5 @@ func Init(e *echo.Echo, f *factory.Factory) {
 	// routes
 	auth.NewHandler(f).Route(e.Group("/auth"))
 	category.NewHandler(f).Route(e.Group("/category"))
+	product.NewHandler(f).Route(e.Group("/product"))
 }

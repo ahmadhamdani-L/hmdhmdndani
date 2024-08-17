@@ -8,34 +8,34 @@ import (
 	"gorm.io/gorm"
 )
 
-type Category interface {
-	Find(ctx *abstraction.Context, m *model.CategoryFilterModel, p *abstraction.Pagination) (*[]model.CategoryEntityModel, *abstraction.PaginationInfo, error)
-	FindByID(ctx *abstraction.Context, id *int) (*model.CategoryEntityModel, error)
-	Create(ctx *abstraction.Context, e *model.CategoryEntityModel) (*model.CategoryEntityModel, error)
-	Update(ctx *abstraction.Context, id *int, e *model.CategoryEntityModel) (*model.CategoryEntityModel, error)
-	Delete(ctx *abstraction.Context, id *int, e *model.CategoryEntityModel) (*model.CategoryEntityModel, error)
-	Get(ctx *abstraction.Context, m *model.CategoryFilterModel) (*[]model.CategoryEntityModel, error)
+type Product interface {
+	Find(ctx *abstraction.Context, m *model.ProductFilterModel, p *abstraction.Pagination) (*[]model.ProductEntityModel, *abstraction.PaginationInfo, error)
+	FindByID(ctx *abstraction.Context, id *int) (*model.ProductEntityModel, error)
+	Create(ctx *abstraction.Context, e *model.ProductEntityModel) (*model.ProductEntityModel, error)
+	Update(ctx *abstraction.Context, id *int, e *model.ProductEntityModel) (*model.ProductEntityModel, error)
+	Delete(ctx *abstraction.Context, id *int, e *model.ProductEntityModel) (*model.ProductEntityModel, error)
+	Get(ctx *abstraction.Context, m *model.ProductFilterModel) (*[]model.ProductEntityModel, error)
 }
 
-type category struct {
+type product struct {
 	abstraction.Repository
 }
 
-func NewCategory(db *gorm.DB) *category {
-	return &category{
+func NewProduct(db *gorm.DB) *product {
+	return &product{
 		abstraction.Repository{
 			Db: db,
 		},
 	}
 }
 
-func (r *category) Find(ctx *abstraction.Context, m *model.CategoryFilterModel, p *abstraction.Pagination) (*[]model.CategoryEntityModel, *abstraction.PaginationInfo, error) {
+func (r *product) Find(ctx *abstraction.Context, m *model.ProductFilterModel, p *abstraction.Pagination) (*[]model.ProductEntityModel, *abstraction.PaginationInfo, error) {
 	conn := r.CheckTrx(ctx)
 
-	var datas []model.CategoryEntityModel
+	var datas []model.ProductEntityModel
 	var info abstraction.PaginationInfo
 
-	query := conn.Model(&model.CategoryEntityModel{})
+	query := conn.Model(&model.ProductEntityModel{})
 
 	// Filter
 	query = r.Filter(ctx, query, *m)
@@ -65,7 +65,7 @@ func (r *category) Find(ctx *abstraction.Context, m *model.CategoryFilterModel, 
 	offset := limit * (*p.Page - 1)
 
 	var totalData int64
-	countQuery := conn.Model(&model.CategoryEntityModel{})
+	countQuery := conn.Model(&model.ProductEntityModel{})
 	countQuery = r.Filter(ctx, countQuery, *m)
 	err := countQuery.Count(&totalData).Error
 	if err != nil {
@@ -73,7 +73,7 @@ func (r *category) Find(ctx *abstraction.Context, m *model.CategoryFilterModel, 
 	}
 
 	// Fetch data with pagination
-	dataQuery := conn.Model(&model.CategoryEntityModel{})
+	dataQuery := conn.Model(&model.ProductEntityModel{})
 	dataQuery = r.Filter(ctx, dataQuery, *m)
 	dataQuery = dataQuery.Order(sortBy).Limit(limit).Offset(offset)
 	err = dataQuery.Find(&datas).Error
@@ -91,18 +91,18 @@ func (r *category) Find(ctx *abstraction.Context, m *model.CategoryFilterModel, 
 }
 
 
-func (r *category) FindByID(ctx *abstraction.Context, id *int) (*model.CategoryEntityModel, error) {
+func (r *product) FindByID(ctx *abstraction.Context, id *int) (*model.ProductEntityModel, error) {
 	conn := r.CheckTrx(ctx)
 
-	var data model.CategoryEntityModel
-	// if err := conn.Where("id = ?", &id).First(&data).WithContext(ctx.Request().Context()).Error; err != nil {
-	if err := conn.Where("id = ?", &id).Preload("Product").First(&data).WithContext(ctx.Request().Context()).Error; err != nil {
+	var data model.ProductEntityModel
+	if err := conn.Where("id = ?", &id).First(&data).WithContext(ctx.Request().Context()).Error; err != nil {
+	// if err := conn.Where("id = ?", &id).Preload("Product").First(&data).WithContext(ctx.Request().Context()).Error; err != nil {
 		return &data, err
 	}
 	return &data, nil
 }
 
-func (r *category) Create(ctx *abstraction.Context, e *model.CategoryEntityModel) (*model.CategoryEntityModel, error) {
+func (r *product) Create(ctx *abstraction.Context, e *model.ProductEntityModel) (*model.ProductEntityModel, error) {
 	conn := r.CheckTrx(ctx)
 
 	if err := conn.Create(e).WithContext(ctx.Request().Context()).Error; err != nil {
@@ -114,7 +114,7 @@ func (r *category) Create(ctx *abstraction.Context, e *model.CategoryEntityModel
 	return e, nil
 }
 
-func (r *category) Update(ctx *abstraction.Context, id *int, e *model.CategoryEntityModel) (*model.CategoryEntityModel, error) {
+func (r *product) Update(ctx *abstraction.Context, id *int, e *model.ProductEntityModel) (*model.ProductEntityModel, error) {
 	conn := r.CheckTrx(ctx)
 
 	if err := conn.Model(e).Where("id = ?", &id).Updates(e).Preload("Company").WithContext(ctx.Request().Context()).Error; err != nil {
@@ -128,7 +128,7 @@ func (r *category) Update(ctx *abstraction.Context, id *int, e *model.CategoryEn
 
 }
 
-func (r *category) Delete(ctx *abstraction.Context, id *int, e *model.CategoryEntityModel) (*model.CategoryEntityModel, error) {
+func (r *product) Delete(ctx *abstraction.Context, id *int, e *model.ProductEntityModel) (*model.ProductEntityModel, error) {
 	conn := r.CheckTrx(ctx)
 
 	if err := conn.Model(e).Where("id =?", id).Update("status", 4).WithContext(ctx.Request().Context()).Error; err != nil {
@@ -138,11 +138,11 @@ func (r *category) Delete(ctx *abstraction.Context, id *int, e *model.CategoryEn
 	return e, nil
 }
 
-func (r *category) Get(ctx *abstraction.Context, m *model.CategoryFilterModel) (*[]model.CategoryEntityModel, error) {
-	var datas []model.CategoryEntityModel
+func (r *product) Get(ctx *abstraction.Context, m *model.ProductFilterModel) (*[]model.ProductEntityModel, error) {
+	var datas []model.ProductEntityModel
 
 	conn := r.CheckTrx(ctx)
-	query := conn.Model(&model.CategoryEntityModel{})
+	query := conn.Model(&model.ProductEntityModel{})
 	
 	query = r.Filter(ctx, query, *m)
 
@@ -153,10 +153,10 @@ func (r *category) Get(ctx *abstraction.Context, m *model.CategoryFilterModel) (
 	return &datas, nil
 }
 
-func (r *category) GetCount(ctx *abstraction.Context, m *model.CategoryFilterModel) (*int64, error) {
+func (r *product) GetCount(ctx *abstraction.Context, m *model.ProductFilterModel) (*int64, error) {
 	var jmlData int64
 	conn := r.CheckTrx(ctx)
-	query := conn.Model(&model.CategoryEntityModel{})
+	query := conn.Model(&model.ProductEntityModel{})
 	//filter
 	query = r.Filter(ctx, query, *m)
 
