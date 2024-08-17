@@ -25,6 +25,7 @@ func Init() {
 		"LION-SUPER-APP": &migration{
 			DbModels: &[]interface{}{
 				&model.UserEntityModel{},
+				&model.CategoryEntityModel{},
 			},
 			IsAutoMigrate: true,
 		},
