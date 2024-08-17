@@ -32,7 +32,7 @@ func NewService(f *factory.Factory) *service {
 func (s *service) Login(ctx *abstraction.Context, payload *dto.AuthLoginRequest) (*dto.AuthLoginResponse, error) {
 	var result *dto.AuthLoginResponse
 
-	data, err := s.Repository.FindByUsername(ctx, &payload.Username)
+	data, err := s.Repository.FindByUsernameCheck(ctx, &payload.Username)
 	if data == nil {
 		return nil, res.CustomErrorBuilder(http.StatusBadRequest, res.E_BAD_REQUEST, "Username is incorrect")
 	}
@@ -67,9 +67,10 @@ func (s *service) Register(ctx *abstraction.Context, payload *dto.AuthRegisterRe
 		return nil, res.ErrorBuilder(&res.ErrorConstant.InternalServerError, err)
 	}
 
-	if existingUser != nil {
+	if len(*existingUser) > 0 {
 		return nil, res.CustomErrorBuilder(http.StatusBadRequest, res.E_BAD_REQUEST, "Username is already taken")
 	}
+
 
 	active := true
 

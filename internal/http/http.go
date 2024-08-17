@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"lion-super-app/configs"
 	"lion-super-app/internal/app/auth"
+	"lion-super-app/internal/app/cart"
 	"lion-super-app/internal/app/category"
 	"lion-super-app/internal/app/product"
 	"lion-super-app/internal/factory"
@@ -25,4 +26,5 @@ func Init(e *echo.Echo, f *factory.Factory) {
 	auth.NewHandler(f).Route(e.Group("/auth"))
 	category.NewHandler(f).Route(e.Group("/category"))
 	product.NewHandler(f).Route(e.Group("/product"))
+	cart.NewHandler(f).Route(e.Group("/cart"))
 }

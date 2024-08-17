@@ -9,7 +9,8 @@ import (
 
 type User interface {
 	checkTrx(ctx *abstraction.Context) *gorm.DB
-	FindByUsername(ctx *abstraction.Context, username *string) (*model.UserEntityModel, error)
+	FindByUsername(ctx *abstraction.Context, username *string) (*[]model.UserEntityModel, error)
+	FindByUsernameCheck(ctx *abstraction.Context, username *string) (*model.UserEntityModel, error)
 	Create(ctx *abstraction.Context, data *model.UserEntityModel) (*model.UserEntityModel, error)
 	Delete(ctx *abstraction.Context, id *int, e *model.UserEntityModel) (*model.UserEntityModel, error)
 	FindByEmail(ctx *abstraction.Context, email *string) (*model.UserEntityModel, error)
@@ -34,7 +35,18 @@ func (r *user) checkTrx(ctx *abstraction.Context) *gorm.DB {
 	return r.Db
 }
 
-func (r *user) FindByUsername(ctx *abstraction.Context, username *string) (*model.UserEntityModel, error) {
+func (r *user) FindByUsername(ctx *abstraction.Context, username *string) (*[]model.UserEntityModel, error) {
+	conn := r.checkTrx(ctx)
+
+	var data []model.UserEntityModel
+	err := conn.Where("username = ? OR email = ?", username, username).Find(&data).WithContext(ctx.Request().Context()).Error
+	if err != nil {
+		return nil, err
+	}
+	return &data, nil
+}
+
+func (r *user) FindByUsernameCheck(ctx *abstraction.Context, username *string) (*model.UserEntityModel, error) {
 	conn := r.checkTrx(ctx)
 
 	var data model.UserEntityModel
@@ -44,7 +56,6 @@ func (r *user) FindByUsername(ctx *abstraction.Context, username *string) (*mode
 	}
 	return &data, nil
 }
-
 func (r *user) Create(ctx *abstraction.Context, e *model.UserEntityModel) (*model.UserEntityModel, error) {
 	conn := r.checkTrx(ctx)
 

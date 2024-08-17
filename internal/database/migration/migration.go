@@ -27,6 +27,8 @@ func Init() {
 				&model.UserEntityModel{},
 				&model.CategoryEntityModel{},
 				&model.ProductEntityModel{},
+				&model.CartEntityModel{},
+				
 			},
 			IsAutoMigrate: true,
 		},
