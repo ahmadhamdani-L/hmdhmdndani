@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "8265a337-7422-4fff-8865-82f89061c953",
+		"name": "LionSupeIndo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34517104"
+	},
+	"item": [
+		{
+			"name": "CATEGORY",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"food\",\r\n    \"description\" : \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/category",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/category",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"category"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY NAME",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/category?name=food",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"category"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "food"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/category/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCT",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDY4MzIsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.bIPY1QEr1veX3RnYm0o44xLMW4gWWfNFkw6QyFNeTW0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"food\",\r\n    \"description\" : \"test\",\r\n    \"price\" : 1000,\r\n    \"category_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/product",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/product",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY NAME",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/product?name=food",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "food"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/product/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CART",
+			"item": [
+				{
+					"name": "CREATE",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDk4ODYsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.pgZcvxuXmRyVhrYwbj-J2DJqKQUI2P0g6nGbx3Cyf9M",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\" : [1,2],\r\n    \"description\" : \"test-cart\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/cart",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5ODU5MDAsImlkIjoxLCJtaWQiOiJobWRobWRuZGFuaUBnbWFpbC5jb20iLCJwaWQiOjg3ODYyNTcwODE0fQ.xrEeNsWFhbdBRP705zR27ZcmGoouJeKU3Nh_s7iUxKo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/cart",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"cart"
+							],
+							"query": [
+								{
+									"key": "name_product",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "user_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "product_id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY NAME",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5ODU5MDAsImlkIjoxLCJtaWQiOiJobWRobWRuZGFuaUBnbWFpbC5jb20iLCJwaWQiOjg3ODYyNTcwODE0fQ.xrEeNsWFhbdBRP705zR27ZcmGoouJeKU3Nh_s7iUxKo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/cart",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"cart"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "name_product",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "user_id",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "product_id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjM5MDI5MTgsImlkIjoxLCJtaWQiOiJkYW5pIiwicGlkIjoyMzQ1Nn0.aAdLvOl6rSGBtj5OFzlIYLNwIo1C_xaOThE-5igpIBY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3030/cart/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"cart",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"hamdan\",\r\n    \"password\": \"skiltestlion-super-j-indo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"hamdan\",\r\n    \"name\":\"Ahmad Hamdani\",\r\n    \"password\": \"skiltestlion-super-j-indo\",\r\n    \"email\": \"hmdhmdndani@gmail.com\",\r\n    \"phone\" : 87862570814,\r\n    \"is_active\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
