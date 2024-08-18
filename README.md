@@ -22,3 +22,6 @@
 
 3. Export postman Collection
     lalu lakukan register -> login -> masukan token di header postmant lalu hit endpoint yg di inginkan
+
+4. Jalankan Program dengan Branch Development
+    
