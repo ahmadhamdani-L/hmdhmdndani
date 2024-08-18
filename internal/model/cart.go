@@ -8,7 +8,7 @@ import (
 )
 
 type CartEntity struct {
-	UserID      string `gorm:"type:varchar(100);not null" json:"name"`
+	UserID      int    `gorm:"type:integer" json:"user_id"`
 	NamaUser    string `gorm:"type:varchar(100);not null"`
 	ProductID   int    `gorm:"type:integer" json:"category_id"`
 	Category    string `gorm:"type:string" json:"category"`

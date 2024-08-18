@@ -15,7 +15,7 @@ type AuthContext struct {
 	ID int
 	Name      string
 	Username  string
-	Email	 string
+	Email	  string
 }
 
 type TrxContext struct {

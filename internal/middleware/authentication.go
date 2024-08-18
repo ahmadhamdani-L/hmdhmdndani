@@ -37,9 +37,21 @@ func Authentication(next echo.HandlerFunc) echo.HandlerFunc {
 			id = 0
 		}
 
+		var name string
+		destructName, ok := token.Claims.(jwt.MapClaims)["name"]
+		if ok && destructName != nil {
+			name, ok = destructName.(string)
+			if !ok {
+				name = ""
+			}
+		} else {
+			name = ""
+		}
+
 		cc := c.(*abstraction.Context)
 		cc.Auth = &abstraction.AuthContext{
 			ID: id,
+			Name: name,
 		}
 
 		return next(cc)

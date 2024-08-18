@@ -82,6 +82,7 @@ func (s *service) Create(ctx *abstraction.Context, payload *dto.CartCreateReques
             cart := model.CartEntityModel{
                 Context:      ctx,
                 CartEntity: model.CartEntity{
+					UserID: ctx.Auth.ID,
                     Category:    category.Name,
                     NamaUser:    ctx.Auth.Name,
                     NameProduct: product.Name,
