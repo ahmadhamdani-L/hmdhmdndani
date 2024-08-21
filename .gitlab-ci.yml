@@ -1,0 +1,62 @@
+# Define stages
+stages:
+  - build
+  - push
+  - deploy
+
+# Define global variables
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_NAME: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+  DOCKERFILE_PATH: Dockerfile
+
+# Use Docker image with Docker installed for building and pushing images
+image: docker:latest
+
+# Define Docker-in-Docker service
+services:
+  - docker:dind
+
+# Before running any jobs, login to GitLab Container Registry
+before_script:
+  - docker info
+  - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+
+# Build stage
+build_job:
+  stage: build
+  script:
+    - docker build --file $DOCKERFILE_PATH --tag $IMAGE_NAME .
+  artifacts:
+    paths:
+      - ./bin/api
+  only:
+    - main
+  tags:
+    - docker
+
+# Push stage: Push the Docker image to GitLab Container Registry
+push_job:
+  stage: push
+  script:
+    - docker push $IMAGE_NAME
+  only:
+    - main
+  tags:
+    - docker
+
+# Deploy stage: Deploy the Docker image to the server
+deploy_job:
+  stage: deploy
+  script:
+    - echo "Deploying the application..."
+    # Example of deploying using SSH to a remote server
+    - ssh user@server "docker pull $IMAGE_NAME && docker stop myapp || true && docker rm myapp || true && docker run -d --name myapp -p 3030:3030 $IMAGE_NAME"
+  environment:
+    name: production
+    url: http://lelouch.com
+  only:
+    - main
+  tags:
+    - docker
