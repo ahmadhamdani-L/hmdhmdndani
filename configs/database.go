@@ -1,7 +1,6 @@
 package configs
 
 import (
-	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -76,37 +75,34 @@ func DB() *DbConfig {
 			"verify-ca":   true,
 			"verify-full": true,
 		}
-		givenSSLMode := strings.ToLower(strings.TrimSpace(PriorityString(fang.GetString("db.sslmode"), os.Getenv("DB_SSLMODE"), "disable")))
+		givenSSLMode := strings.ToLower(strings.TrimSpace("disable"))
 		if _, ok := listSSLMode[givenSSLMode]; !ok {
 			givenSSLMode = "disable"
 		}
 
-		strMaxOpenConns := PriorityString(fang.GetString("db.max_open_connections"), os.Getenv("DB_MAX_OPEN_CONNECTIONS"), "20")
-		mOpenConns, err := strconv.Atoi(strMaxOpenConns)
+		mOpenConns, err := strconv.Atoi("20")
 		if err != nil {
 			mOpenConns = 0
 		}
 
-		strMaxIdleConns := PriorityString(fang.GetString("db.max_idle_connections"), os.Getenv("DB_MAX_IDLE_CONNECTIONS"), "18")
-		mIdleConns, err := strconv.Atoi(strMaxIdleConns)
+		mIdleConns, err := strconv.Atoi("18")
 		if err != nil {
 			mIdleConns = 18
 		}
 
-		strConnLifetime := PriorityString(fang.GetString("db.connection_lifetime"), os.Getenv("DB_CONNECTION_LIFETIME"))
-		ltConn, err := time.ParseDuration(strConnLifetime)
+		ltConn, err := time.ParseDuration("0s")
 		if err != nil {
 			ltConn = 0 * time.Second
 		}
 
 		db = &DbConfig{
-			host:         PriorityString(fang.GetString("db.host"), os.Getenv("DB_HOST"), "postgresql://postgres:RPpXCbONvVntIDzVFdEHRlHjWlSAvHRm@postgres.railway.internal:5432/railway"),
-			port:         PriorityString(fang.GetString("db.port"), os.Getenv("DB_PORT"), "5432"),
-			name:         PriorityString(fang.GetString("db.name"), os.Getenv("DB_NAME"), "railway"),
-			user:         PriorityString(fang.GetString("db.user"), os.Getenv("DB_USER"), "postgres"),
-			pass:         PriorityString(fang.GetString("db.pass"), os.Getenv("DB_PASS"), "RPpXCbONvVntIDzVFdEHRlHjWlSAvHRm"),
+			host:         "postgres.railway.internal",
+			port:         "5432",
+			name:         "railway",
+			user:         "postgres",
+			pass:         "RPpXCbONvVntIDzVFdEHRlHjWlSAvHRm", // Hardcoded password
 			sslmode:      givenSSLMode,
-			tz:           PriorityString(fang.GetString("db.tz"), os.Getenv("DB_TZ"), "UTC"),
+			tz:           "UTC",
 			maxOpenConns: mOpenConns,
 			maxIdleConns: mIdleConns,
 			connLifetime: ltConn,
