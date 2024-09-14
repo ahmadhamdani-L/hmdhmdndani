@@ -100,11 +100,11 @@ func DB() *DbConfig {
 		}
 
 		db = &DbConfig{
-			host:         PriorityString(fang.GetString("db.host"), os.Getenv("DB_HOST"), "localhost"),
+			host:         PriorityString(fang.GetString("db.host"), os.Getenv("DB_HOST"), "postgresql://postgres:RPpXCbONvVntIDzVFdEHRlHjWlSAvHRm@postgres.railway.internal:5432/railway"),
 			port:         PriorityString(fang.GetString("db.port"), os.Getenv("DB_PORT"), "5432"),
-			name:         PriorityString(fang.GetString("db.name"), os.Getenv("DB_NAME"), "postgres"),
+			name:         PriorityString(fang.GetString("db.name"), os.Getenv("DB_NAME"), "railway"),
 			user:         PriorityString(fang.GetString("db.user"), os.Getenv("DB_USER"), "postgres"),
-			pass:         PriorityString(fang.GetString("db.pass"), os.Getenv("DB_PASS"), "1234"),
+			pass:         PriorityString(fang.GetString("db.pass"), os.Getenv("DB_PASS"), "RPpXCbONvVntIDzVFdEHRlHjWlSAvHRm"),
 			sslmode:      givenSSLMode,
 			tz:           PriorityString(fang.GetString("db.tz"), os.Getenv("DB_TZ"), "UTC"),
 			maxOpenConns: mOpenConns,
