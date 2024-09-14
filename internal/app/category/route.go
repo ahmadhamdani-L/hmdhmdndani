@@ -12,5 +12,6 @@ func (h *handler) Route(g *echo.Group) {
 	g.POST("", h.Create, middleware.Authentication)
 	g.PATCH("/:id", h.Update, middleware.Authentication)
 	g.DELETE("/:id", h.Delete, middleware.Authentication)
+	g.POST("/upload", h.UploadTemplate)
 
 }

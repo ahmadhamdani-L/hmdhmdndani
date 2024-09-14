@@ -16,7 +16,7 @@ type UserEntity struct {
 	Username     string `json:"username" validate:"required" example:"administrator"`
 	Name         string `json:"name" validate:"required" example:"Lelouch Lampergouee"`
 	Password     string `json:"password" validate:"required" gorm:"-" example:"nevemor3"`
-	Phone        int    `json:"phone" validate:"required" example:"1"`
+	Phone        string `json:"phone" validate:"required" example:"1"`
 	PasswordHash string `json:"-" gorm:"column:password"`
 	Email        string `json:"email" validate:"required" example:"admin@lion.code"`
 	IsActive     *bool  `json:"is_active" validate:"required" gorm:"default:true" example:"true"`

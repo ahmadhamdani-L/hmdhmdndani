@@ -78,3 +78,16 @@ type CategoryDeleteResponseDoc struct {
 		Data CategoryDeleteResponse `json:"data"`
 	} `json:"body"`
 }
+
+type CategoryUploadRequest struct {
+	Gambar string `query:"gambar"` 
+}
+type CategoryUploadResponse struct {
+	model.CategoryEntityModel
+}
+type CategoryUploadResponseDoc struct {
+	Body struct {
+		Meta res.Meta               `json:"meta"`
+		Data CategoryDeleteResponse `json:"data"`
+	} `json:"body"`
+}
